@@ -7,6 +7,8 @@ public class Movimiento : MonoBehaviour
 {
     public Rigidbody2D rb;
 
+    Animator anim;
+
     [SerializeField] float velocidad = 100f;
 
     [SerializeField] float startingY;
@@ -17,6 +19,7 @@ public class Movimiento : MonoBehaviour
     private void Start()
     {
         startingY = transform.position.y;
+        anim = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -37,5 +40,24 @@ public class Movimiento : MonoBehaviour
             transform.position = new Vector2(minX, startingY);
         }
 
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Bueno"))
+        {
+            anim.SetTrigger("Eat");
+            MusicManager.instance.PlaySound(0);
+        }
+        else if (collision.CompareTag("Malo"))
+        {
+            anim.SetTrigger("Hit");
+            MusicManager.instance.PlaySound(1);
+        }
+        else if (collision.CompareTag("Malisimo"))
+        {
+            anim.SetTrigger("Hit");
+            MusicManager.instance.PlaySound(2);
+        }
     }
 }

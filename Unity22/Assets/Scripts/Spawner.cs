@@ -30,12 +30,13 @@ public class Spawner : MonoBehaviour
 
             Vector2 spawnPosition = new Vector2(randomInt, yPos);
 
-            int randomObj = Random.Range(0, 2);
+            int randomObj = Random.Range(0, objetos.Count);
 
             Instantiate(objetos[randomObj], spawnPosition, Quaternion.identity);
 
             tiempoEntreSpawn -= timeReduced;
-            timeReduced *= 0.6f;
+            timeReduced *= 0.7f;
+            timeReduced = Mathf.Clamp(timeReduced, 0.03f, 2f);
             tiempoEntreSpawn = Mathf.Clamp(tiempoEntreSpawn, 0.05f, 2f);
 
             yield return new WaitForSeconds(tiempoEntreSpawn);

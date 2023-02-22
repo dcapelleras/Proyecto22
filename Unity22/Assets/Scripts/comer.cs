@@ -4,20 +4,20 @@ using UnityEngine;
 
 public class comer : MonoBehaviour
 {
-    public bool bueno;
+    public int vidaAumentada;
 
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
         {
-            if (bueno)
+            if (vidaAumentada > 0)
             {
-                contador.instancia.Puntuar(1);
+                contador.instancia.Puntuar(vidaAumentada);
             }
             else
             {
                 contador.instancia.LoseHP();
-                contador.instancia.Puntuar(-1);
+                contador.instancia.Puntuar(vidaAumentada);
             }
             gameObject.SetActive(false);
 
