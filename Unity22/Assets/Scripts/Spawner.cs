@@ -14,6 +14,8 @@ public class Spawner : MonoBehaviour
 
     [SerializeField] float tiempoEntreSpawn = 1f;
 
+    float timeReduced = 0.4f;
+
     private void Start()
     {
         StartCoroutine(Spawn());
@@ -32,8 +34,9 @@ public class Spawner : MonoBehaviour
 
             Instantiate(objetos[randomObj], spawnPosition, Quaternion.identity);
 
-            tiempoEntreSpawn -= 0.2f;
-            tiempoEntreSpawn = Mathf.Clamp(tiempoEntreSpawn, 0.4f, 2f);
+            tiempoEntreSpawn -= timeReduced;
+            timeReduced *= 0.6f;
+            tiempoEntreSpawn = Mathf.Clamp(tiempoEntreSpawn, 0.05f, 2f);
 
             yield return new WaitForSeconds(tiempoEntreSpawn);
         }

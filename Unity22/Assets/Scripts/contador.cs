@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class contador : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class contador : MonoBehaviour
     [SerializeField] TMP_Text textCounter;
     [SerializeField] TMP_Text vidaCounter;
     [SerializeField] TMP_Text gameOverText;
+    [SerializeField] GameObject restartButton;
 
     void Start()
     {
@@ -21,6 +23,7 @@ public class contador : MonoBehaviour
         vidaCounter.text = "Vida" + vida.ToString();
         textCounter.text = "Puntos" + puntuacion.ToString();
         gameOverText.gameObject.SetActive(false);
+        restartButton.SetActive(false);
     }
 
     public void Puntuar(int punto)
@@ -41,7 +44,33 @@ public class contador : MonoBehaviour
 
     public void GameOver()
     {
+        if (puntuacion < 0)
+        {
+            gameOverText.text = "Por dios, que malo eres... Puntuación conseguida: " + puntuacion.ToString();
+        }
+        else if (puntuacion < 5)
+        {
+            gameOverText.text = "Mediocre pero podria ser peor... Puntuación conseguida: " + puntuacion.ToString();
+        }
+        else if (puntuacion < 20)
+        {
+            gameOverText.text = "Not bad! Puntuación conseguida: " + puntuacion.ToString();
+        }
+        else
+        {
+            gameOverText.text = "Puto amo! Puntuación conseguida: " + puntuacion.ToString();
+        }
+        restartButton.SetActive(true);
         gameOverText.gameObject.SetActive(true);
         Time.timeScale= 0;
+    }
+
+    public void PlayAgain()
+    {
+        Time.timeScale = 1;
+        gameOverText.gameObject.SetActive(false);
+        puntuacion= 0;
+        vida = 5;
+        SceneManager.LoadScene(0);
     }
 }
